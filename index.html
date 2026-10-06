@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LYPERY - LEVEL 20</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #080b12;
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .screen {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .lightning {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: clamp(45px, 12vw, 90px);
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+        }
+
+        .level {
+            font-size: 25px;
+            letter-spacing: 5px;
+            color: #ffd43b;
+            margin-bottom: 35px;
+        }
+
+        .intro {
+            max-width: 550px;
+            line-height: 1.7;
+            color: #c8cbd3;
+            font-size: 17px;
+            margin-bottom: 35px;
+        }
+
+        .start-button {
+            border: 2px solid #ffd43b;
+            background: transparent;
+            color: white;
+            padding: 16px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .start-button:hover {
+            background: #ffd43b;
+            color: #080b12;
+            transform: scale(1.05);
+        }
+
+        #main {
+            display: none;
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .header h2 {
+            font-size: 40px;
+            letter-spacing: 4px;
+        }
+
+        .xp {
+            width: 100%;
+            height: 12px;
+            background: #202532;
+            margin-top: 20px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .xp-bar {
+            width: 100%;
+            height: 100%;
+            background: #ffd43b;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            background: #111722;
+            border: 1px solid #303746;
+            padding: 28px 20px;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: #ffd43b;
+            transform: translateY(-5px);
+        }
+
+        .icon {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #969dab;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .footer {
+            text-align: center;
+            color: #555d6c;
+            margin-top: 50px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PANTALLA DE INICIO -->
+
+    <section class="screen" id="welcome">
+
+        <div class="lightning">⚡</div>
+
+        <h1>LYPERY</h1>
+
+        <div class="level">
+            LEVEL 20 UNLOCKED
+        </div>
+
+        <p class="intro">
+            He intentado juntar un poquito de tu mundo con el mío...
+            y de alguna manera ha salido esto.
+            <br><br>
+            Espero que te guste. ❤️
+        </p>
+
+        <button class="start-button" onclick="startGame()">
+            INICIAR PARTIDA
+        </button>
+
+    </section>
+
+
+    <!-- MENÚ PRINCIPAL -->
+
+    <main id="main">
+
+        <div class="header">
+
+            <h2>PLAYER LYPERY</h2>
+
+            <p style="color:#969dab; margin-top:10px;">
+                Nivel 20 · Experiencia máxima
+            </p>
+
+            <div class="xp">
+                <div class="xp-bar"></div>
+            </div>
+
+        </div>
+
+
+        <div class="grid">
+
+            <div class="card" onclick="showMessage('VALORANT')">
+                <div class="icon">🎮</div>
+                <h3>VALORANT</h3>
+                <p>
+                    Tu mundo competitivo,
+                    tus partidas y tus momentos de clutch.
+                </p>
+            </div>
+
+
+            <div class="card" onclick="showMessage('INAZUMA')">
+                <div class="icon">⚡</div>
+                <h3>INAZUMA ELEVEN</h3>
+                <p>
+                    El fútbol también puede ser una
+                    aventura.
+                </p>
+            </div>
+
+
+            <div class="card" onclick="showMessage('FUTBOL')">
+                <div class="icon">⚽</div>
+                <h3>FÚTBOL</h3>
+                <p>
+                    Una de esas cosas que forman
+                    parte de ti.
+                </p>
+            </div>
+
+
+            <div class="card" onclick="showMessage('CODE')">
+                <div class="icon">💻</div>
+                <h3>CODE</h3>
+                <p>
+                    Para tu cerebro de programador.
+                </p>
+            </div>
+
+
+            <div class="card" onclick="showMessage('NOSOTROS')">
+                <div class="icon">❤️</div>
+                <h3>NOSOTROS</h3>
+                <p>
+                    Casi dos años de recuerdos,
+                    momentos y aventuras.
+                </p>
+            </div>
+
+
+            <div class="card" onclick="showMessage('SECRET')">
+                <div class="icon">🔒</div>
+                <h3>SECRET</h3>
+                <p>
+                    Hay algo que todavía
+                    no está desbloqueado...
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="footer">
+            PLAYER LYPERY · LEVEL 20
+        </div>
+
+    </main>
+
+
+    <script>
+
+        function startGame() {
+
+            document.getElementById("welcome").style.display = "none";
+
+            document.getElementById("main").style.display = "block";
+
+            window.scrollTo(0, 0);
+        }
+
+
+        function showMessage(section) {
+
+            if (section === "SECRET") {
+
+                alert(
+                    "🔒 MISIÓN BLOQUEADA\n\n" +
+                    "Todavía no has encontrado la contraseña..."
+                );
+
+            } else {
+
+                alert(
+                    "🔓 " + section + "\n\n" +
+                    "Esta sección todavía está en desarrollo.\n\n" +
+                    "Pero tranquilo, Lypery...\n" +
+                    "estamos preparando algo para ti ❤️"
+                );
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
