@@ -1,176 +1,441 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LYPERY - LEVEL 20</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+<title>LYPERY — LEVEL 20</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background:
+            radial-gradient(circle at top, #18213b 0%, #080b12 45%, #05070b 100%);
+        color: white;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    button {
+        font-family: inherit;
+    }
+
+    /* =========================
+       PANTALLA INICIAL
+       ========================= */
+
+    #welcome {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 25px;
+    }
+
+    .welcome-box {
+        width: 100%;
+        max-width: 650px;
+        padding: 45px 25px;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 24px;
+        background: rgba(10,14,24,0.75);
+        box-shadow: 0 0 60px rgba(80,100,255,0.12);
+        backdrop-filter: blur(10px);
+    }
+
+    .bolt {
+        font-size: 55px;
+        margin-bottom: 15px;
+    }
+
+    .small-title {
+        color: #8e9cff;
+        font-size: 13px;
+        letter-spacing: 5px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .welcome-title {
+        font-size: clamp(42px, 12vw, 82px);
+        letter-spacing: 6px;
+        margin-bottom: 5px;
+    }
+
+    .level {
+        font-size: 19px;
+        color: #b8c0d9;
+        letter-spacing: 4px;
+        margin-bottom: 30px;
+    }
+
+    .welcome-text {
+        color: #d9ddec;
+        line-height: 1.7;
+        font-size: 16px;
+        max-width: 500px;
+        margin: auto;
+    }
+
+    .start-button {
+        margin-top: 35px;
+        padding: 15px 35px;
+        border: none;
+        border-radius: 12px;
+        background: white;
+        color: #080b12;
+        font-weight: bold;
+        font-size: 15px;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .start-button:hover {
+        transform: scale(1.04);
+        box-shadow: 0 0 30px rgba(255,255,255,0.2);
+    }
+
+    /* =========================
+       WEB PRINCIPAL
+       ========================= */
+
+    #app {
+        display: none;
+        min-height: 100vh;
+    }
+
+    .top-bar {
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 22px;
+        background: rgba(5,8,14,0.8);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(12px);
+    }
+
+    .top-inner {
+        max-width: 1100px;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .player-name {
+        font-weight: bold;
+        letter-spacing: 2px;
+    }
+
+    .player-level {
+        color: #8e9cff;
+        font-size: 13px;
+        margin-top: 4px;
+    }
+
+    .status {
+        font-size: 11px;
+        color: #7df0a8;
+        border: 1px solid rgba(125,240,168,0.3);
+        padding: 7px 10px;
+        border-radius: 20px;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: auto;
+        padding: 50px 22px 80px;
+    }
+
+    .hero {
+        margin-bottom: 45px;
+    }
+
+    .hero-tag {
+        color: #8e9cff;
+        font-size: 12px;
+        letter-spacing: 4px;
+        margin-bottom: 12px;
+    }
+
+    .hero h1 {
+        font-size: clamp(35px, 8vw, 65px);
+        margin-bottom: 10px;
+    }
+
+    .hero p {
+        color: #9ca5bd;
+        max-width: 650px;
+        line-height: 1.6;
+    }
+
+    /* XP */
+
+    .xp-box {
+        margin-top: 25px;
+        max-width: 650px;
+    }
+
+    .xp-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        color: #9ca5bd;
+        margin-bottom: 8px;
+    }
+
+    .xp-bar {
+        height: 9px;
+        background: #1b2030;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .xp-fill {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, #6875ff, #b178ff);
+        border-radius: 20px;
+    }
+
+    /* =========================
+       CARTAS
+       ========================= */
+
+    .section-title {
+        font-size: 13px;
+        letter-spacing: 3px;
+        color: #737d99;
+        margin-bottom: 18px;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .card {
+        position: relative;
+        min-height: 190px;
+        padding: 25px;
+        border: 1px solid rgba(255,255,255,0.09);
+        border-radius: 18px;
+        background: linear-gradient(
+            145deg,
+            rgba(25,31,50,0.9),
+            rgba(10,14,23,0.9)
+        );
+        cursor: pointer;
+        transition: 0.25s;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(142,156,255,0.5);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .card-number {
+        position: absolute;
+        right: 18px;
+        top: 15px;
+        color: rgba(255,255,255,0.15);
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .card-icon {
+        font-size: 35px;
+        margin-bottom: 18px;
+    }
+
+    .card h2 {
+        font-size: 19px;
+        margin-bottom: 8px;
+    }
+
+    .card p {
+        color: #8f98ae;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .rarity {
+        position: absolute;
+        bottom: 18px;
+        right: 20px;
+        font-size: 9px;
+        letter-spacing: 2px;
+        color: #737d99;
+    }
+
+    /* =========================
+       SECCIONES
+       ========================= */
+
+    .content-section {
+        display: none;
+        animation: appear 0.3s ease;
+    }
+
+    .content-section.active {
+        display: block;
+    }
+
+    @keyframes appear {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
         }
-
-        body {
-            background: #080b12;
-            color: white;
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
+    }
 
-        .screen {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 30px;
-        }
+    .back-button {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.12);
+        color: #c8cee0;
+        padding: 10px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-bottom: 25px;
+    }
 
-        .lightning {
-            font-size: 55px;
-            margin-bottom: 15px;
-        }
+    .content-box {
+        border: 1px solid rgba(255,255,255,0.09);
+        border-radius: 18px;
+        background: rgba(13,17,28,0.8);
+        padding: 30px;
+    }
 
-        h1 {
-            font-size: clamp(45px, 12vw, 90px);
-            letter-spacing: 8px;
-            margin-bottom: 10px;
-        }
+    .content-box h2 {
+        font-size: 30px;
+        margin-bottom: 12px;
+    }
 
-        .level {
-            font-size: 25px;
-            letter-spacing: 5px;
-            color: #ffd43b;
-            margin-bottom: 35px;
-        }
+    .content-box > p {
+        color: #a5adc1;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
 
-        .intro {
-            max-width: 550px;
-            line-height: 1.7;
-            color: #c8cbd3;
-            font-size: 17px;
-            margin-bottom: 35px;
-        }
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
 
-        .start-button {
-            border: 2px solid #ffd43b;
-            background: transparent;
-            color: white;
-            padding: 16px 35px;
-            font-size: 16px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    .stat {
+        background: rgba(255,255,255,0.04);
+        border-radius: 12px;
+        padding: 18px;
+    }
 
-        .start-button:hover {
-            background: #ffd43b;
-            color: #080b12;
-            transform: scale(1.05);
-        }
+    .stat-label {
+        color: #737d99;
+        font-size: 11px;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+    }
 
-        #main {
-            display: none;
-            padding: 40px 20px;
-            max-width: 1000px;
-            margin: auto;
-        }
+    .stat-value {
+        font-weight: bold;
+        font-size: 16px;
+    }
 
-        .header {
-            text-align: center;
-            margin-bottom: 45px;
-        }
+    .secret {
+        text-align: center;
+        padding: 50px 20px;
+    }
 
-        .header h2 {
-            font-size: 40px;
-            letter-spacing: 4px;
-        }
+    .lock {
+        font-size: 55px;
+        margin-bottom: 20px;
+    }
 
-        .xp {
-            width: 100%;
-            height: 12px;
-            background: #202532;
-            margin-top: 20px;
-            border-radius: 20px;
-            overflow: hidden;
-        }
+    .secret h2 {
+        margin-bottom: 12px;
+    }
 
-        .xp-bar {
-            width: 100%;
-            height: 100%;
-            background: #ffd43b;
-        }
+    .secret p {
+        color: #8f98ae;
+        line-height: 1.6;
+    }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
+    footer {
+        text-align: center;
+        margin-top: 55px;
+        color: #454c60;
+        font-size: 11px;
+        letter-spacing: 2px;
+    }
+
+    /* =========================
+       MÓVIL
+       ========================= */
+
+    @media (max-width: 650px) {
+
+        .cards {
+            grid-template-columns: 1fr;
         }
 
         .card {
-            background: #111722;
-            border: 1px solid #303746;
-            padding: 28px 20px;
-            min-height: 180px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
+            min-height: 160px;
         }
 
-        .card:hover {
-            border-color: #ffd43b;
-            transform: translateY(-5px);
+        .container {
+            padding-top: 35px;
         }
 
-        .icon {
-            font-size: 38px;
-            margin-bottom: 15px;
+        .top-bar {
+            padding: 16px;
         }
 
-        .card h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
+        .status {
+            display: none;
         }
 
-        .card p {
-            color: #969dab;
-            font-size: 14px;
-            line-height: 1.5;
+        .content-box {
+            padding: 22px;
         }
-
-        .footer {
-            text-align: center;
-            color: #555d6c;
-            margin-top: 50px;
-            font-size: 13px;
-        }
-    </style>
+    }
+</style>
 </head>
 
 <body>
 
-    <!-- PANTALLA DE INICIO -->
+<!-- =========================
+     PANTALLA INICIAL
+     ========================= -->
 
-    <section class="screen" id="welcome">
+<section id="welcome">
 
-        <div class="lightning">⚡</div>
+    <div class="welcome-box">
 
-        <h1>LYPERY</h1>
+        <div class="bolt">⚡</div>
 
-        <div class="level">
-            LEVEL 20 UNLOCKED
-        </div>
+        <div class="small-title">PLAYER PROFILE</div>
 
-        <p class="intro">
-            He intentado juntar un poquito de tu mundo con el mío...
+        <h1 class="welcome-title">LYPERY</h1>
+
+        <div class="level">LEVEL 20 UNLOCKED</div>
+
+        <p class="welcome-text">
+            He intentado juntar un poquito de tu mundo con el mío…
             y de alguna manera ha salido esto.
             <br><br>
             Espero que te guste. ❤️
@@ -180,133 +445,468 @@
             INICIAR PARTIDA
         </button>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- MENÚ PRINCIPAL -->
+<!-- =========================
+     APLICACIÓN
+     ========================= -->
 
-    <main id="main">
+<div id="app">
 
-        <div class="header">
+    <header class="top-bar">
 
-            <h2>PLAYER LYPERY</h2>
+        <div class="top-inner">
 
-            <p style="color:#969dab; margin-top:10px;">
-                Nivel 20 · Experiencia máxima
-            </p>
+            <div>
+                <div class="player-name">PLAYER // LYPERY</div>
+                <div class="player-level">LEVEL 20 · EXPERIENCE MAX</div>
+            </div>
 
-            <div class="xp">
-                <div class="xp-bar"></div>
+            <div class="status">
+                ● ONLINE
             </div>
 
         </div>
 
+    </header>
 
-        <div class="grid">
 
-            <div class="card" onclick="showMessage('VALORANT')">
-                <div class="icon">🎮</div>
-                <h3>VALORANT</h3>
+    <main class="container">
+
+        <!-- MENÚ -->
+
+        <section id="menu">
+
+            <div class="hero">
+
+                <div class="hero-tag">MISSION CONTROL</div>
+
+                <h1>LEVEL 20</h1>
+
                 <p>
-                    Tu mundo competitivo,
-                    tus partidas y tus momentos de clutch.
+                    Bienvenido a tu partida especial.
+                    Has desbloqueado una serie de archivos relacionados
+                    con algunas de tus cosas favoritas.
                 </p>
+
+                <div class="xp-box">
+
+                    <div class="xp-info">
+                        <span>EXPERIENCIA</span>
+                        <span>20 / 20</span>
+                    </div>
+
+                    <div class="xp-bar">
+                        <div class="xp-fill"></div>
+                    </div>
+
+                </div>
+
             </div>
 
 
-            <div class="card" onclick="showMessage('INAZUMA')">
-                <div class="icon">⚡</div>
-                <h3>INAZUMA ELEVEN</h3>
-                <p>
-                    El fútbol también puede ser una
-                    aventura.
-                </p>
+            <div class="section-title">
+                SELECT YOUR MISSION
             </div>
 
 
-            <div class="card" onclick="showMessage('FUTBOL')">
-                <div class="icon">⚽</div>
-                <h3>FÚTBOL</h3>
-                <p>
-                    Una de esas cosas que forman
-                    parte de ti.
-                </p>
+            <div class="cards">
+
+                <div class="card" onclick="openSection('valorant')">
+
+                    <div class="card-number">01</div>
+
+                    <div class="card-icon">🎮</div>
+
+                    <h2>VALORANT</h2>
+
+                    <p>
+                        Competitive mode detected.
+                        Rank, clutchs y horas de juego.
+                    </p>
+
+                    <div class="rarity">EPIC</div>
+
+                </div>
+
+
+                <div class="card" onclick="openSection('inazuma')">
+
+                    <div class="card-number">02</div>
+
+                    <div class="card-icon">⚡</div>
+
+                    <h2>INAZUMA ELEVEN</h2>
+
+                    <p>
+                        Archivo especial del jugador.
+                        Técnica especial pendiente.
+                    </p>
+
+                    <div class="rarity">LEGENDARY</div>
+
+                </div>
+
+
+                <div class="card" onclick="openSection('futbol')">
+
+                    <div class="card-number">03</div>
+
+                    <div class="card-icon">⚽</div>
+
+                    <h2>FÚTBOL</h2>
+
+                    <p>
+                        Match history, pasión por el fútbol
+                        y partidos memorables.
+                    </p>
+
+                    <div class="rarity">RARE</div>
+
+                </div>
+
+
+                <div class="card" onclick="openSection('code')">
+
+                    <div class="card-number">04</div>
+
+                    <div class="card-icon">💻</div>
+
+                    <h2>CODE</h2>
+
+                    <p>
+                        Sistema operativo del jugador.
+                        Código, proyectos y creatividad.
+                    </p>
+
+                    <div class="rarity">EPIC</div>
+
+                </div>
+
+
+                <div class="card" onclick="openSection('nosotros')">
+
+                    <div class="card-number">05</div>
+
+                    <div class="card-icon">❤️</div>
+
+                    <h2>NOSOTROS</h2>
+
+                    <p>
+                        Archivo desbloqueado:
+                        una pequeña parte de nuestra historia.
+                    </p>
+
+                    <div class="rarity">MYTHIC</div>
+
+                </div>
+
+
+                <div class="card" onclick="openSection('secret')">
+
+                    <div class="card-number">06</div>
+
+                    <div class="card-icon">🔒</div>
+
+                    <h2>SECRET</h2>
+
+                    <p>
+                        Archivo protegido.
+                        ¿Serás capaz de desbloquearlo?
+                    </p>
+
+                    <div class="rarity">???</div>
+
+                </div>
+
             </div>
 
+            <footer>
+                LYPERY.EXE · VERSION 20.0
+            </footer>
 
-            <div class="card" onclick="showMessage('CODE')">
-                <div class="icon">💻</div>
-                <h3>CODE</h3>
+        </section>
+
+
+        <!-- VALORANT -->
+
+        <section id="valorant" class="content-section">
+
+            <button class="back-button" onclick="backToMenu()">
+                ← VOLVER
+            </button>
+
+            <div class="content-box">
+
+                <h2>🎮 VALORANT</h2>
+
                 <p>
-                    Para tu cerebro de programador.
+                    Archivo competitivo del jugador LYPERY.
+                    Aquí iremos colocando referencias a Valorant,
+                    partidas, momentos míticos y alguna sorpresa.
                 </p>
+
+                <div class="stats">
+
+                    <div class="stat">
+                        <div class="stat-label">MAIN MODE</div>
+                        <div class="stat-value">COMPETITIVE</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-label">STATUS</div>
+                        <div class="stat-value">CLUTCH READY</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-label">AIM</div>
+                        <div class="stat-value">█████████░</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-label">RAGE</div>
+                        <div class="stat-value">██████░░░░</div>
+                    </div>
+
+                </div>
+
             </div>
 
+        </section>
 
-            <div class="card" onclick="showMessage('NOSOTROS')">
-                <div class="icon">❤️</div>
-                <h3>NOSOTROS</h3>
+
+        <!-- INAZUMA -->
+
+        <section id="inazuma" class="content-section">
+
+            <button class="back-button" onclick="backToMenu()">
+                ← VOLVER
+            </button>
+
+            <div class="content-box">
+
+                <h2>⚡ INAZUMA ELEVEN</h2>
+
                 <p>
-                    Casi dos años de recuerdos,
-                    momentos y aventuras.
+                    ¡Archivo de técnicas especiales desbloqueado!
+                    Esta sección será nuestro espacio para crear
+                    su propia ficha de jugador estilo Inazuma.
                 </p>
+
+                <div class="stats">
+
+                    <div class="stat">
+                        <div class="stat-label">POSITION</div>
+                        <div class="stat-value">PLAYER</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-label">SPECIAL MOVE</div>
+                        <div class="stat-value">???</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-label">POWER</div>
+                        <div class="stat-value">20</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-label">RARITY</div>
+                        <div class="stat-value">LEGENDARY</div>
+                    </div>
+
+                </div>
+
             </div>
 
+        </section>
 
-            <div class="card" onclick="showMessage('SECRET')">
-                <div class="icon">🔒</div>
-                <h3>SECRET</h3>
+
+        <!-- FÚTBOL -->
+
+        <section id="futbol" class="content-section">
+
+            <button class="back-button" onclick="backToMenu()">
+                ← VOLVER
+            </button>
+
+            <div class="content-box">
+
+                <h2>⚽ FÚTBOL</h2>
+
                 <p>
-                    Hay algo que todavía
-                    no está desbloqueado...
+                    Un archivo dedicado a una de las cosas que forman
+                    parte del mundo de LYPERY.
                 </p>
+
+                <div class="stats">
+
+                    <div class="stat">
+                        <div class="stat-label">MATCH STATUS</div>
+                        <div class="stat-value">READY</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-label">PASSION</div>
+                        <div class="stat-value">██████████</div>
+                    </div>
+
+                </div>
+
             </div>
 
-        </div>
+        </section>
 
 
-        <div class="footer">
-            PLAYER LYPERY · LEVEL 20
-        </div>
+        <!-- CODE -->
+
+        <section id="code" class="content-section">
+
+            <button class="back-button" onclick="backToMenu()">
+                ← VOLVER
+            </button>
+
+            <div class="content-box">
+
+                <h2>💻 CODE</h2>
+
+                <p>
+                    Sistema del jugador: programación, proyectos,
+                    creatividad y muchas horas delante del ordenador.
+                </p>
+
+                <div class="stats">
+
+                    <div class="stat">
+                        <div class="stat-label">SYSTEM</div>
+                        <div class="stat-value">ONLINE</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-label">BUGS</div>
+                        <div class="stat-value">???</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NOSOTROS -->
+
+        <section id="nosotros" class="content-section">
+
+            <button class="back-button" onclick="backToMenu()">
+                ← VOLVER
+            </button>
+
+            <div class="content-box">
+
+                <h2>❤️ NOSOTROS</h2>
+
+                <p>
+                    Archivo personal desbloqueado.
+                    Aquí iremos construyendo una pequeña colección
+                    de recuerdos, momentos y cosas que tengan sentido
+                    para nosotros.
+                </p>
+
+                <div class="stats">
+
+                    <div class="stat">
+                        <div class="stat-label">STATUS</div>
+                        <div class="stat-value">SPECIAL</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-label">MEMORIES</div>
+                        <div class="stat-value">LOADING...</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SECRET -->
+
+        <section id="secret" class="content-section">
+
+            <button class="back-button" onclick="backToMenu()">
+                ← VOLVER
+            </button>
+
+            <div class="content-box secret">
+
+                <div class="lock">🔒</div>
+
+                <h2>MISIÓN BLOQUEADA</h2>
+
+                <p>
+                    Este archivo contiene información clasificada.
+                    <br>
+                    Necesitas encontrar la contraseña correcta
+                    para continuar.
+                </p>
+
+                <p style="margin-top:20px;">
+                    STATUS: <strong>LOCKED</strong>
+                </p>
+
+            </div>
+
+        </section>
 
     </main>
 
-
-    <script>
-
-        function startGame() {
-
-            document.getElementById("welcome").style.display = "none";
-
-            document.getElementById("main").style.display = "block";
-
-            window.scrollTo(0, 0);
-        }
+</div>
 
 
-        function showMessage(section) {
+<script>
 
-            if (section === "SECRET") {
+function startGame() {
 
-                alert(
-                    "🔒 MISIÓN BLOQUEADA\n\n" +
-                    "Todavía no has encontrado la contraseña..."
-                );
+    document.getElementById("welcome").style.display = "none";
 
-            } else {
+    document.getElementById("app").style.display = "block";
 
-                alert(
-                    "🔓 " + section + "\n\n" +
-                    "Esta sección todavía está en desarrollo.\n\n" +
-                    "Pero tranquilo, Lypery...\n" +
-                    "estamos preparando algo para ti ❤️"
-                );
+    window.scrollTo(0, 0);
+}
 
-            }
 
-        }
+function openSection(section) {
 
-    </script>
+    document.getElementById("menu").style.display = "none";
+
+    document.querySelectorAll(".content-section").forEach(function(item) {
+        item.classList.remove("active");
+    });
+
+    document.getElementById(section).classList.add("active");
+
+    window.scrollTo(0, 0);
+}
+
+
+function backToMenu() {
+
+    document.querySelectorAll(".content-section").forEach(function(item) {
+        item.classList.remove("active");
+    });
+
+    document.getElementById("menu").style.display = "block";
+
+    window.scrollTo(0, 0);
+}
+
+</script>
 
 </body>
 </html>
